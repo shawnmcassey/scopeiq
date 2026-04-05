@@ -8,6 +8,11 @@ module.exports = async (req, res) => {
   try {
     const body = await getBody(req);
     const result = await callAnthropic(body, process.env.ANTHROPIC_API_KEY);
+    // If Anthropic returned an error, pass it through with 400 status
+    if (result.type === 'error') {
+      res.statusCode = 400;
+      return res.end(JSON.stringify({ error: result.error.message }));
+    }
     res.setHeader('Content-Type', 'application/json');
     return res.end(JSON.stringify(result));
   } catch(e) {
