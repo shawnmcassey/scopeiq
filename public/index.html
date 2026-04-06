@@ -611,9 +611,7 @@ CRITICAL PRICING RULE: You MUST use ONLY the unit prices from the PROVIDENCE RI 
         // Strip control chars
         s = s.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g,'');
         // Fix literal newlines inside JSON strings (replace with space)
-        s = s.replace(/"([^"]*)"/g, function(m, inner) {
-          return '"' + inner.replace(/\n/g,' ').replace(/\r/g,'').replace(/\t/g,' ') + '"';
-        });
+        s = s = s.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, " ");
         return JSON.parse(s);
       })(rawText.slice(j1,j2+1));
 
