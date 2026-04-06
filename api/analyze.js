@@ -120,8 +120,22 @@ module.exports = async (req, res) => {
     if (result.content && Array.isArray(result.content)) {
       result.content = result.content.map(block => {
         if (block.type === 'text' && block.text) {
-          // Remove control characters that break JSON parsing
-          block.text = block.text.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '');
+          let text = block.text;
+          // Strip control chars
+          text = text.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '');
+          // Fix literal newlines inside JSON string values
+          // Find JSON boundaries and fix newlines within string values
+          const j1 = text.indexOf('{');
+          const j2 = text.lastIndexOf('}');
+          if (j1 > -1 && j2 > -1) {
+            let json = text.slice(j1, j2+1);
+            // Replace literal newlines inside quoted strings with space
+            json = json.replace(/"((?:[^"\\]|\\.)*)"/g, function(m, inner) {
+              return '"' + inner.replace(/\n/g, ' ').replace(/\r/g, '').replace(/\t/g, ' ') + '"';
+            });
+            text = text.slice(0, j1) + json + text.slice(j2+1);
+          }
+          block.text = text;
         }
         return block;
       });
