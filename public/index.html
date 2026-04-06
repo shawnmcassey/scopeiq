@@ -600,7 +600,7 @@ CRITICAL PRICING RULE: You MUST use ONLY the unit prices from the PROVIDENCE RI 
     const res1=await fetch('/api/analyze',{
       method:'POST',
       headers:{'Content-Type':'application/json',},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3000,system:sys1,messages:[{role:'user',content:[...imgContent,{type:'text',text:jobCtx}]}]})
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:6000,system:sys1,messages:[{role:'user',content:[...imgContent,{type:'text',text:jobCtx}]}]})
     });
     if(!res1.ok)throw new Error(`API error: ${res1.status}`);
     const d1=await res1.json();
@@ -620,7 +620,7 @@ CRITICAL PRICING RULE: You MUST use ONLY the unit prices from the PROVIDENCE RI 
     const res2=await fetch('/api/analyze',{
       method:'POST',
       headers:{'Content-Type':'application/json',},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:2000,system:sys2,messages:[{role:'user',content:`Write two documents based on this job summary:\n${summaryForCall2}\n\nDOCUMENT 1 - SCOPE OF WORK:\nWrite a detailed room-by-room scope of work. Start with "SCOPE OF WORK". Cover all affected areas, materials, and methodology.\n\n---SPLIT---\n\nDOCUMENT 2 - PROPOSAL LETTER:\nWrite a professional proposal letter from Rhode Island Restoration to the insured. Include the property address, claim number, brief scope summary, estimated timeline, and a signature block for the contractor. Start with "PROPOSAL LETTER".`}]})
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,system:sys2,messages:[{role:'user',content:`Write two documents based on this job summary:\n${summaryForCall2}\n\nDOCUMENT 1 - SCOPE OF WORK:\nWrite a detailed room-by-room scope of work. Start with "SCOPE OF WORK". Cover all affected areas, materials, and methodology.\n\n---SPLIT---\n\nDOCUMENT 2 - PROPOSAL LETTER:\nWrite a professional proposal letter from Rhode Island Restoration to the insured. Include the property address, claim number, brief scope summary, estimated timeline, and a signature block for the contractor. Start with "PROPOSAL LETTER".`}]})
     });
     if(!res2.ok)throw new Error(`API error (call 2): ${res2.status}`);
     const d2=await res2.json();
