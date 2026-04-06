@@ -116,6 +116,16 @@ module.exports = async (req, res) => {
       res.statusCode = 400;
       return res.end(JSON.stringify({ error: result.error.message }));
     }
+    // Sanitize the response text to fix common JSON issues
+    if (result.content && Array.isArray(result.content)) {
+      result.content = result.content.map(block => {
+        if (block.type === 'text' && block.text) {
+          // Remove control characters that break JSON parsing
+          block.text = block.text.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '');
+        }
+        return block;
+      });
+    }
     res.setHeader('Content-Type', 'application/json');
     return res.end(JSON.stringify(result));
   } catch(e) {
