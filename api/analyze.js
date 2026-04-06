@@ -106,10 +106,12 @@ module.exports = async (req, res) => {
   try {
     const body = await getBody(req);
     // Inject price list into system prompt if present
+    // Put price list FIRST so AI sees it before anything else
+    const priceMandate = 'MANDATORY PRICING RULE: Every unitCost in your JSON MUST come from the PROVIDENCE RI PRICE LIST below. Do NOT use any other prices. Look up each Xactimate code in the list and copy the exact price shown. If you cannot find the exact code, find the closest match in the list. Never invent a price.\n\n' + PRICE_LIST + '\n\n---\n\n';
     if (body.system) {
-      body.system = body.system + '\n\n' + PRICE_LIST;
+      body.system = priceMandate + body.system;
     } else {
-      body.system = PRICE_LIST;
+      body.system = priceMandate;
     }
     const result = await callAnthropic(body, process.env.ANTHROPIC_API_KEY);
     if (result.type === 'error') {
