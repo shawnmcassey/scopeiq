@@ -608,14 +608,9 @@ CRITICAL PRICING RULE: You MUST use ONLY the unit prices from the PROVIDENCE RI 
     const j1=rawText.indexOf('{'), j2=rawText.lastIndexOf('}');
     if(j1===-1||j2===-1)throw new Error('No JSON in response. Try again with fewer images.');
     const parsed=(function(s){
-        // Strip control chars
-        s = s.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g,'');
-        // Fix literal newlines inside JSON strings (replace with space)
-        s = s = s.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, " ");
+        s=s.replace(/[\x00-\x1f\x7f]/g,' ');
         return JSON.parse(s);
-      })(rawText.slice(j1,j2+1));
-
-    // ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ CALL 2: Scope + proposal as plain text (no JSON) ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+    })(rawText.slice(j1,j2+1));  // ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ CALL 2: Scope + proposal as plain text (no JSON) ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
     document.getElementById('lmsg').textContent='Writing scope of work and proposal...';
 
     const summaryForCall2=`Loss type: ${parsed.summary?.lossType||lossType||'unknown'}. Affected areas: ${(parsed.summary?.affectedAreas||[]).join(', ')||'multiple'}. Total SF: ${parsed.summary?.totalSF||0}. Grand total estimate: $${Number(parsed.grandTotal||0).toFixed(2)}. Rooms: ${(parsed.rooms||[]).map(r=>`${r.name} (${r.sf}SF)`).join(', ')}. Insured: ${insured||'[Insured Name]'}. Address: ${addr||'[Property Address]'}. Claim: ${claimNum||'[Claim Number]'}.`;
