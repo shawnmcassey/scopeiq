@@ -1,434 +1,200 @@
- <!DOCTYPE html> 
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>x
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ScopeIQ ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ AI Estimating</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#efefec;
-  --text:#1a1a18;--text2:#6b6b67;--text3:#9a9a94;
-  --border:rgba(0,0,0,0.11);--border2:rgba(0,0,0,0.2);
-  --green:#0F6E56;--gm:#1D9E75;--gl:#E1F5EE;--gt:#0F6E56;
-  --blue:#185FA5;--bl:#E6F1FB;--bt:#185FA5;
-  --amber:#854F0B;--al:#FAEEDA;
-  --red:#A32D2D;--rl:#FCEBEB;
-  --r:8px;--rl2:12px;
-  --f:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --mono:'SF Mono','Fira Code',monospace;
-}
-@media(prefers-color-scheme:dark){:root{
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ScopeIQ ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ AI Estimating</title>
+<title>ScopeIQ - AI Estimating</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#efefec;
-  --text:#1a1a18;--text2:#6b6b67;--text3:#9a9a94;
-  --border:rgba(0,0,0,0.11);--border2:rgba(0,0,0,0.2);
-  --green:#0F6E56;--gm:#1D9E75;--gl:#E1F5EE;--gt:#0F6E56;
-  --blue:#185FA5;--bl:#E6F1FB;--bt:#185FA5;
-  --amber:#854F0B;--al:#FAEEDA;
-  --red:#A32D2D;--rl:#FCEBEB;
-  --r:8px;--rl2:12px;
-  --f:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --mono:'SF Mono','Fira Code',monospace;
-}
-@media(prefers-color-scheme:dark){:root{
-  --bg:#1c1c1a;--bg2:#252523;--bg3:#2e2e2b;
-  --text:#f0f0ec;--text2:#9a9a94;--text3:#6b6b67;
-  --border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.2);
-  --green:#1D9E75;--gm:#5DCAA5;--gl:#04342C;--gt:#5DCAA5;
-  --blue:#378ADD;--bl:#042C53;--bt:#85B7EB;
-  --amber:#EF9F27;--al:#412402;
-  --red:#F09595;--rl:#501313;
-}}
-body{font-family:var(--f);background:var(--bg3);color:var(--text);min-height:100vh;}
-.app{max-width:1020px;margin:0 auto;padding:2rem 1rem 5rem;}
-
-/* Header */
-.hdr{display:flex;align-items:center;gap:14px;margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:0.5px solid var(--border);}
-.logo{width:40px;height:40px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.logo svg{width:22px;height:22px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.hdr h1{font-size:22px;font-weight:600;letter-spacing:-0.02em;}
-.hdr p{font-size:13px;color:var(--text2);margin-top:1px;}
-.hbadge{margin-left:auto;font-size:11px;background:var(--gl);color:var(--gt);padding:4px 10px;border-radius:20px;font-weight:500;white-space:nowrap;}
-
-.slbl{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
-.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--rl2);padding:1.25rem;margin-bottom:14px;}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-@media(max-width:640px){.g2{grid-template-columns:1fr;}}
-
-/* Upload tabs */
-.utabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-.utab{padding:7px 12px;border:0.5px solid var(--border2);border-radius:var(--r);font-size:12px;cursor:pointer;background:var(--bg);color:var(--text2);font-family:var(--f);transition:all 0.12s;}
-.utab.active{background:var(--gl);color:var(--gt);border-color:var(--gm);font-weight:600;}
-
-/* Drop zone */
-.dz{border:1.5px dashed var(--border2);border-radius:var(--r);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all 0.15s;}
-.dz:hover,.dz.over{background:var(--gl);border-color:var(--gm);}
-.dz svg{width:26px;height:26px;stroke:var(--text2);margin-bottom:6px;}
-.dz-main{font-size:13px;font-weight:500;margin-bottom:2px;}
-.dz-sub{font-size:11px;color:var(--text2);}
-
-/* Thumbs */
-.thumbs{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
-.thumb{position:relative;width:72px;height:72px;border-radius:6px;overflow:hidden;border:0.5px solid var(--border);flex-shrink:0;}
-.thumb img{width:100%;height:100%;object-fit:cover;}
-.tbadge{position:absolute;bottom:2px;left:2px;background:rgba(0,0,0,0.7);color:white;font-size:9px;padding:1px 4px;border-radius:3px;font-family:var(--mono);}
-.tx{position:absolute;top:2px;right:2px;width:16px;height:16px;background:rgba(0,0,0,0.65);color:white;border-radius:50%;border:none;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;}
-
-/* DocuSketch workflow box */
-.ds-workflow{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:1rem;margin-bottom:12px;}
-.ds-steps{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
-.ds-step{display:flex;align-items:flex-start;gap:10px;font-size:13px;}
-.ds-num{width:22px;height:22px;background:var(--green);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:1px;}
-.ds-step-text{color:var(--text);line-height:1.4;}
-.ds-step-text strong{color:var(--gt);}
-.ds-export-types{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
-.ds-badge{font-size:11px;padding:3px 8px;border-radius:4px;font-weight:600;font-family:var(--mono);}
-.ds-esx{background:#E1F5EE;color:#0F6E56;}
-.ds-jpg{background:#E6F1FB;color:#185FA5;}
-.ds-png{background:#FAEEDA;color:#854F0B;}
-
-/* Video progress */
-.vprog{margin-top:10px;display:none;}
-.vprog-track{height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;margin-bottom:5px;}
-.vprog-fill{height:100%;background:var(--gm);border-radius:2px;transition:width 0.2s;width:0%;}
-.vprog-lbl{font-size:11px;color:var(--text2);}
-
-/* Fields */
-.fld{margin-bottom:11px;}
-.fld label{display:block;font-size:12px;color:var(--text2);margin-bottom:4px;}
-select,input[type=text],textarea{width:100%;border:0.5px solid var(--border2);border-radius:var(--r);padding:8px 10px;font-size:13px;font-family:var(--f);color:var(--text);background:var(--bg);transition:border 0.15s;}
-select:focus,input:focus,textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,0.12);}
-textarea{resize:vertical;line-height:1.5;}
-
-/* Voice */
-.vrow{display:flex;gap:8px;align-items:flex-start;}
-.vrow textarea{flex:1;}
-.mic{width:42px;height:42px;border:0.5px solid var(--border2);border-radius:var(--r);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;}
-.mic svg{width:18px;height:18px;fill:none;stroke:var(--text2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.mic.rec{background:var(--rl);border-color:var(--red);}
-.mic.rec svg{stroke:var(--red);animation:pulse 1s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-
-/* Analyze btn */
-.abtn{width:100%;padding:14px;background:var(--green);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:500;cursor:pointer;font-family:var(--f);letter-spacing:-0.01em;transition:all 0.15s;margin-top:4px;}
-.abtn:hover{filter:brightness(1.1);}
-.abtn:disabled{background:var(--bg2);color:var(--text2);cursor:not-allowed;filter:none;}
-
-/* Results */
-.results{margin-top:1.5rem;display:none;}
-.results.vis{display:block;}
-.lcard{text-align:center;padding:3rem;background:var(--bg);border-radius:var(--rl2);border:0.5px solid var(--border);}
-.spinner{width:32px;height:32px;border:2.5px solid var(--border);border-top-color:var(--gm);border-radius:50%;animation:spin 0.75s linear infinite;margin:0 auto 1rem;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.lmsg{font-size:14px;color:var(--text2);}
-.lsub{font-size:12px;color:var(--text3);margin-top:5px;}
-
-/* Chips */
-.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.25rem;}
-.chip{font-size:12px;padding:4px 10px;border-radius:20px;font-weight:500;}
-.cb{background:var(--bl);color:var(--bt);}
-.cg{background:var(--gl);color:var(--gt);}
-.ca{background:var(--al);color:var(--amber);}
-.cr{background:var(--rl);color:var(--red);}
-
-/* Tabs */
-.tabs{display:flex;gap:2px;margin-bottom:1rem;border-bottom:0.5px solid var(--border);flex-wrap:wrap;}
-.tab{padding:9px 14px;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-0.5px;color:var(--text2);background:none;border-top:none;border-left:none;border-right:none;font-family:var(--f);transition:color 0.12s;}
-.tab.active{color:var(--green);border-bottom-color:var(--green);font-weight:500;}
-.tab:hover{color:var(--text);}
-
-/* Table */
-.twrap{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--rl2);overflow:hidden;overflow-x:auto;}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:520px;}
-thead th{text-align:left;font-size:11px;font-weight:600;color:var(--text2);padding:8px 12px;border-bottom:0.5px solid var(--border);text-transform:uppercase;letter-spacing:0.04em;background:var(--bg2);}
-tbody td{padding:9px 12px;border-bottom:0.5px solid var(--border);color:var(--text);vertical-align:top;}
-tbody tr:last-child td{border-bottom:none;}
-tbody tr:hover td{background:var(--bg2);}
-.cc{font-family:var(--mono);font-size:12px;color:var(--gt);}
-.secr td{background:var(--bg2);font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;padding:5px 12px;}
-.totr td{font-weight:600;background:var(--bg2);}
-.grnd td{font-weight:700;font-size:14px;color:var(--gt);background:var(--gl);}
-
-/* Rooms grid */
-.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-bottom:12px;}
-.rc{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--rl2);padding:1rem;}
-.rn{font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text);}
-.rconf{font-size:10px;font-weight:400;color:var(--text3);margin-left:4px;}
-.rs{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:4px 0;border-bottom:0.5px solid var(--border);}
-.rs:last-child{border-bottom:none;}
-.rs span:first-child{color:var(--text2);}
-.rs span:last-child{font-weight:500;font-family:var(--mono);color:var(--text);}
-.rs.hi span:last-child{color:var(--gt);}
-
-/* Damage */
-.di{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-bottom:0.5px solid var(--border);}
-.di:last-child{border-bottom:none;}
-.dsev{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-.sh{background:#E24B4A;}.sm{background:#EF9F27;}.sl{background:#639922;}
-.dloc{font-weight:500;font-size:13px;margin-bottom:2px;}
-.ddsc{color:var(--text2);font-size:12px;line-height:1.4;}
-.dact{font-size:11px;color:var(--gt);margin-top:3px;}
-
-/* Scope editor */
-.sed{width:100%;min-height:180px;border:0.5px solid var(--border2);border-radius:var(--r);padding:12px;font-size:13px;font-family:var(--f);color:var(--text);background:var(--bg);line-height:1.6;resize:vertical;}
-.sed:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,0.12);}
-
-/* Export row */
-.erow{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap;}
-.eb{padding:9px 16px;border:0.5px solid var(--border2);border-radius:var(--r);font-size:13px;cursor:pointer;background:var(--bg);color:var(--text);font-family:var(--f);transition:background 0.12s;}
-.eb:hover{background:var(--bg2);}
-.eb.p{background:var(--green);color:white;border-color:var(--green);}
-.eb.p:hover{filter:brightness(1.1);}
-
-/* Proposal */
-.pb{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--rl2);padding:1.75rem;font-size:14px;line-height:1.8;color:var(--text);white-space:pre-wrap;}
-
-/* Alerts */
-.info{background:var(--bl);color:var(--bt);border-radius:var(--r);padding:9px 12px;font-size:12px;margin-bottom:10px;line-height:1.5;}
-.warn{background:var(--al);color:var(--amber);border-radius:var(--r);padding:9px 12px;font-size:12px;margin-bottom:10px;line-height:1.5;}
-.emsg{background:var(--rl);color:var(--red);border-radius:var(--r);padding:1rem;font-size:13px;margin-top:1rem;}
-
-/* ESX notice */
-.esx-box{background:var(--gl);border:1px solid var(--gm);border-radius:var(--r);padding:12px 14px;margin-top:10px;}
-.esx-box h4{font-size:13px;font-weight:600;color:var(--gt);margin-bottom:4px;}
-.esx-box p{font-size:12px;color:var(--gt);line-height:1.5;}
-
-canvas{display:none;}
-footer{text-align:center;margin-top:3rem;font-size:12px;color:var(--text3);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F5F5F7;--surface:#FFFFFF;--border:#D2D2D7;--text:#1D1D1F;--text2:#6E6E73;--text3:#86868B;--blue:#0071E3;--blue-h:#0077ED;--green:#34C759;--red:#FF3B30;--amber:#FF9F0A;--r:12px;--rs:8px;--shadow:0 2px 12px rgba(0,0,0,0.08);--mono:'SF Mono','Fira Code',monospace}
+html{font-size:14px;-webkit-font-smoothing:antialiased;background:var(--bg)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
+nav{background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;height:52px;display:flex;align-items:center;padding:0 24px}
+.nav-inner{max-width:960px;width:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-icon{width:30px;height:30px;background:#1D1D1F;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.nav-icon svg{fill:none;stroke:white;stroke-width:1.8;width:15px;height:15px}
+.nav-title{font-size:17px;font-weight:600;letter-spacing:-0.3px}
+.nav-sub{font-size:11px;color:var(--text3)}
+.nav-link{font-size:13px;color:var(--blue);text-decoration:none;font-weight:500}
+main{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+.card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+.card-header{padding:20px 24px 0;display:flex;align-items:center;gap:10px}
+.step-badge{width:22px;height:22px;border-radius:50%;background:var(--text);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-title{font-size:15px;font-weight:600;letter-spacing:-0.2px}
+.card-body{padding:16px 24px 20px}
+.utabs{display:flex;gap:2px;background:#F5F5F7;border-radius:var(--rs);padding:3px;margin-bottom:16px}
+.utab{flex:1;padding:7px 12px;border:none;background:transparent;border-radius:6px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s;text-align:center}
+.utab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.12)}
+.upanel{display:none}.upanel.active{display:block}
+.dropzone{border:2px dashed var(--border);border-radius:var(--r);padding:40px 24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
+.dropzone:hover,.dropzone.over{border-color:var(--blue);background:#EBF5FF}
+.dropzone svg{width:28px;height:28px;stroke:var(--text3);stroke-width:1.5;fill:none;margin-bottom:12px}
+.dropzone p{font-size:14px;color:var(--text2);margin-bottom:4px}
+.dropzone span{font-size:12px;color:var(--text3)}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.thumb{position:relative;width:72px;height:72px;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb .rm{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,0.55);border:none;cursor:pointer;color:white;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.vc{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.vc label{font-size:12px;color:var(--text2)}
+.vc select{padding:6px 10px;border:1px solid var(--border);border-radius:var(--rs);font-size:13px;color:var(--text);background:var(--surface);font-family:inherit}
+.vprog-wrap{height:4px;background:var(--border);border-radius:2px;margin-top:8px;display:none}
+.vprog-fill{height:4px;background:var(--blue);border-radius:2px;width:0;transition:width .3s}
+.vprog-lbl{font-size:11px;color:var(--text3);margin-top:4px;display:none}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-field label{font-size:12px;font-weight:500;color:var(--text2);letter-spacing:0.2px}
+.form-field input,.form-field select,.form-field textarea{padding:10px 12px;border:1px solid var(--border);border-radius:var(--rs);font-size:14px;color:var(--text);background:var(--surface);font-family:inherit;width:100%;transition:border-color .15s}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,0.12)}
+.form-field textarea{resize:vertical;min-height:100px;line-height:1.5}
+.span2{grid-column:1/-1}
+.mic-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+#mic-btn{padding:7px 14px;border:1px solid var(--border);border-radius:var(--rs);background:var(--surface);font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s}
+#mic-btn:hover{background:var(--bg)}
+#mic-btn.active{border-color:var(--red);color:var(--red);background:#FFF5F5}
+#mic-status{font-size:12px;color:var(--text3)}
+.analyze-wrap{padding:0 24px 24px}
+#analyze-btn{width:100%;padding:14px;background:var(--blue);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:600;cursor:pointer;letter-spacing:-0.2px;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+#analyze-btn:hover{background:var(--blue-h)}
+#analyze-btn:disabled{background:var(--border);color:var(--text3);cursor:not-allowed}
+#results{display:none;margin-top:16px}
+#lcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:48px 24px;text-align:center;box-shadow:var(--shadow)}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#lmsg{font-size:15px;font-weight:600;margin-bottom:6px}
+#lsub{font-size:13px;color:var(--text2)}
+#emsg{display:none;background:#FFF2F2;border:1px solid #FFCDD2;border-radius:var(--r);padding:16px;color:var(--red);font-size:13px;margin-top:12px}
+#rcontent{display:none}
+.result-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);padding:0 24px}
+.rtab{padding:12px 16px;border:none;background:transparent;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.rtab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.rtab:hover:not(.active){color:var(--text)}
+.rpanel{display:none;padding:24px}.rpanel.active{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.chip{padding:5px 12px;border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;background:var(--surface);color:var(--text2);transition:all .15s}
+.chip.active{background:var(--text);color:white;border-color:var(--text)}
+#li-body{font-size:13px;line-height:1.7}
+.li-table{width:100%;border-collapse:collapse;font-size:13px}
+.li-table th{text-align:left;padding:10px 12px;background:#F5F5F7;color:var(--text2);font-weight:600;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.li-table td{padding:10px 12px;border-bottom:1px solid #F0F0F0}
+.li-table tr:last-child td{border-bottom:none}
+.li-total{font-weight:700;background:#F5F5F7}
+.action-bar{display:flex;gap:8px;flex-wrap:wrap;padding:0 24px 20px}
+.btn-sm{padding:8px 14px;border-radius:var(--rs);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:all .15s}
+.btn-sm:hover{background:var(--bg)}
+.btn-sm.primary{background:var(--blue);color:white;border-color:var(--blue)}
+.btn-sm.primary:hover{background:var(--blue-h)}
+.meas-tabs{display:flex;gap:2px;background:#F5F5F7;border-radius:var(--rs);padding:3px;margin-bottom:16px;flex-wrap:wrap}
+.mtab{padding:6px 12px;border:none;background:transparent;border-radius:6px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s}
+.mtab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.12)}
+#room-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.room-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);padding:14px}
+.room-card h4{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
+.meas-row{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
+.meas-row span:first-child{color:var(--text2)}
+.meas-row span:last-child{font-weight:600}
+.meas-body-txt{font-size:13px;line-height:1.7}
+#scope-ed,#prop-text{width:100%;min-height:300px;padding:16px;border:1px solid var(--border);border-radius:var(--rs);font-size:13px;font-family:inherit;color:var(--text);background:var(--surface);resize:vertical;line-height:1.7}
+#scope-ed:focus,#prop-text:focus{outline:none;border-color:var(--blue)}
+#dmg-list{font-size:13px;line-height:1.8}
+footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);background:var(--surface)}
+footer p{font-size:12px;color:var(--text3);margin-bottom:3px}
+#canvas{display:none}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr}main{padding:16px 16px 60px}.result-tabs{padding:0 12px;overflow-x:auto}.action-bar{padding:0 16px 16px}}
 </style>
 </head>
 <body>
 <canvas id="canvas"></canvas>
-<div class="app">
-
-<div class="hdr">
-  <div class="logo"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-  <div><h1>ScopeIQ</h1><p>AI-powered damage estimating ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· Rhode Island Restoration</p></div>
-  <span class="hbadge">Providence, RI price list</span>
-</div>
-
-<!-- Step 1 -->
-<div class="slbl">Step 1 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Upload media</div>
-<div class="card">
-  <div class="utabs">
-    <button class="utab active" onclick="switchUTab('photos',this)">Photos</button>
-    <button class="utab" onclick="switchUTab('video',this)">Video</button>
-    <button class="utab" onclick="switchUTab('sketch',this)">DocuSketch / Floor plan</button>
-    <button class="utab" onclick="switchUTab('matterport',this)">Matterport</button>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div><div class="nav-title">ScopeIQ</div><div class="nav-sub">Rhode Island Restoration</div></div>
+    </div>
+    <a href="#" class="nav-link" onclick="alert('Providence, RI price list (RIPR8X_MAY25)');return false">Price list</a>
   </div>
-
-  <!-- Photos -->
-  <div id="panel-photos">
-    <div class="dz" id="photo-dz" onclick="document.getElementById('photo-input').click()">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
-      <div class="dz-main">Drop job site photos here or click to browse</div>
-      <div class="dz-sub">JPG ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· PNG ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· WEBP ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ multiple files OK</div>
-    </div>
-    <input type="file" id="photo-input" accept="image/*" multiple style="display:none"/>
-    <div class="thumbs" id="photo-thumbs"></div>
-  </div>
-
-  <!-- Video -->
-  <div id="panel-video" style="display:none;">
-    <div class="info">AI extracts key frames automatically ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ walk each room slowly. Narrate damage out loud as you go.</div>
-    <div class="dz" id="video-dz" onclick="document.getElementById('video-input').click()">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
-      <div class="dz-main">Drop video here or click to browse</div>
-      <div class="dz-sub">MP4 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· MOV ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· AVI ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· WEBM</div>
-    </div>
-    <input type="file" id="video-input" accept="video/*" style="display:none"/>
-    <div class="fld" style="margin-top:10px;">
-      <label>Frames to extract</label>
-      <select id="frame-count">
-        <option value="8">8 frames ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ fast</option>
-        <option value="12" selected>12 frames ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ recommended</option>
-        <option value="20">20 frames ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ thorough</option>
-      </select>
-    </div>
-    <div class="vprog" id="vprog">
-      <div class="vprog-track"><div class="vprog-fill" id="vprog-fill"></div></div>
-      <div class="vprog-lbl" id="vprog-lbl"></div>
-    </div>
-    <div class="thumbs" id="video-thumbs"></div>
-  </div>
-
-  <!-- DocuSketch / Floor plan -->
-  <div id="panel-sketch" style="display:none;">
-    <div class="ds-workflow">
-      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">How to get measurements from DocuSketch</div>
-      <div class="ds-steps">
-        <div class="ds-step"><div class="ds-num">1</div><div class="ds-step-text">In DocuSketch, open your project and click <strong>Download</strong></div></div>
-        <div class="ds-step"><div class="ds-num">2</div><div class="ds-step-text">Select <strong>"Sketches with measurements"</strong> ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ downloads as a ZIP with JPEG/PNG floor plans showing every room dimension labeled</div></div>
-        <div class="ds-step"><div class="ds-num">3</div><div class="ds-step-text">Also download <strong>"360ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ° walkthrough photos"</strong> for damage detection</div></div>
-        <div class="ds-step"><div class="ds-num">4</div><div class="ds-step-text">Upload all images below ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ScopeIQ reads every labeled dimension, room name, and SF callout directly off the sketches</div></div>
-      </div>
-      <div style="font-size:11px;color:var(--text2);margin-top:10px;">Accepted exports:</div>
-      <div class="ds-export-types">
-        <span class="ds-badge ds-jpg">sketch-with-measurements.jpg</span>
-        <span class="ds-badge ds-png">floor-plan.png</span>
-        <span class="ds-badge ds-jpg">360-walkthrough-photos.jpg</span>
-      </div>
-      <div class="esx-box" style="margin-top:10px;">
-        <h4>Pro tip ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ skip ScopeIQ entirely for sketches</h4>
-        <p>DocuSketch can export an <strong>.ESX file</strong> (native Xactimate format) and a <strong>.ESI scope file</strong> ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ these import directly into Xactimate with measurements pre-loaded. Use ScopeIQ for damage analysis and line items on top of that.</p>
-      </div>
-    </div>
-
-    <div class="dz" id="sketch-dz" onclick="document.getElementById('sketch-input').click()">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
-      <div class="dz-main">Upload DocuSketch exports, floor plans, or hand drawings</div>
-      <div class="dz-sub">Sketches with measurements ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· Floor plan images ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· 360ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ° walkthrough photos ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· Hand-drawn sketches</div>
-    </div>
-    <input type="file" id="sketch-input" accept="image/*" multiple style="display:none"/>
-    <div class="thumbs" id="sketch-thumbs"></div>
-
-    <div style="margin-top:14px;">
-      <div class="fld">
-        <label>Additional measurement notes (room names, any dimensions you know)</label>
-        <textarea id="sketch-notes" rows="3" placeholder="e.g. Master bedroom is 14x16, living room ceiling is 9ft, kitchen has 18LF of cabinets..."></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- Matterport -->
-  <div id="panel-matterport" style="display:none;">
-    <div class="ds-workflow">
-      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">How to get measurements from Matterport</div>
-      <div class="ds-steps">
-        <div class="ds-step"><div class="ds-num">1</div><div class="ds-step-text">Open your Matterport model and navigate to the <strong>Floor Plan view</strong> (click the floor plan icon at the bottom)</div></div>
-        <div class="ds-step"><div class="ds-num">2</div><div class="ds-step-text"><strong>Screenshot each floor</strong> ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ the floor plan shows room dimensions labeled. Take one screenshot per floor.</div></div>
-        <div class="ds-step"><div class="ds-num">3</div><div class="ds-step-text">Use the <strong>Measurement tool</strong> (tape measure icon) to measure key items ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ screenshot each measurement you take</div></div>
-        <div class="ds-step"><div class="ds-num">4</div><div class="ds-step-text">Upload all screenshots below ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ScopeIQ reads every dimension shown on screen</div></div>
-      </div>
-      <div style="font-size:11px;color:var(--text2);margin-top:10px;">Also upload any 360ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ° interior photos from the model for damage detection.</div>
-    </div>
-
-    <div class="dz" id="matterport-dz" onclick="document.getElementById('matterport-input').click()">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/><path d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/></svg>
-      <div class="dz-main">Upload Matterport floor plan screenshots &amp; measurement tool screenshots</div>
-      <div class="dz-sub">Floor plan views ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· Measurement screenshots ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· Interior 360ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ° photos</div>
-    </div>
-    <input type="file" id="matterport-input" accept="image/*" multiple style="display:none"/>
-    <div class="thumbs" id="matterport-thumbs"></div>
-  </div>
-</div>
-
-<!-- Step 2 -->
-<div class="slbl">Step 2 ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Job details &amp; scope</div>
-<div class="g2">
+</nav>
+<main>
   <div class="card">
-    <div class="fld"><label>Loss type</label>
-      <select id="loss-type">
-        <option value="">Select...</option>
-        <option value="water">Water damage</option>
-        <option value="fire">Fire &amp; smoke</option>
-        <option value="mold">Mold remediation</option>
-        <option value="reconstruction">Full reconstruction</option>
-        <option value="new_construction">New construction</option>
-      </select>
+    <div class="card-header"><div class="step-badge">1</div><div class="card-title">Upload Media</div></div>
+    <div class="card-body">
+      <div class="utabs">
+        <button class="utab active" onclick="switchUTab('photos',this)">Photos</button>
+        <button class="utab" onclick="switchUTab('video',this)">Video</button>
+        <button class="utab" onclick="switchUTab('sketch',this)">DocuSketch / Floor Plan</button>
+        <button class="utab" onclick="switchUTab('matterport',this)">Matterport</button>
+      </div>
+      <div id="panel-photos" class="upanel active">
+        <div class="dropzone" id="photo-dz"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Drop job site photos here or click to browse</p><span>JPG, PNG, WEBP &mdash; multiple files OK</span><input type="file" id="photo-input" accept="image/*" multiple style="display:none"/></div>
+        <div class="thumbs" id="photo-thumbs"></div>
+      </div>
+      <div id="panel-video" class="upanel">
+        <div class="dropzone" id="video-dz"><svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.27A1 1 0 0121 8.68v6.64a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Drop a walkthrough video here or click to browse</p><span>MP4, MOV, AVI</span><input type="file" id="video-input" accept="video/*" style="display:none"/></div>
+        <div class="vc"><label>Frames to extract</label><select id="frame-count"><option value="8">8 frames &mdash; fast</option><option value="12" selected>12 frames &mdash; recommended</option><option value="20">20 frames &mdash; thorough</option></select></div>
+        <div class="vprog-wrap" id="vprog"><div class="vprog-fill" id="vprog-fill"></div></div>
+        <div class="vprog-lbl" id="vprog-lbl"></div>
+        <div class="thumbs" id="video-thumbs"></div>
+      </div>
+      <div id="panel-sketch" class="upanel">
+        <div class="dropzone" id="sketch-dz"><svg viewBox="0 0 24 24"><path d="M9 2H5a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V7l-5-5H9zM13 2v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Drop floor plan or DocuSketch export here</p><span>PNG, PDF, JPG, ESX</span><input type="file" id="sketch-input" accept="image/*,.pdf,.esx" multiple style="display:none"/></div>
+        <div class="thumbs" id="sketch-thumbs"></div>
+        <textarea id="sketch-notes" placeholder="Optional: room notes or sketch annotations..." style="margin-top:12px;width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--rs);font-size:13px;font-family:inherit;resize:vertical;min-height:72px;background:var(--surface);color:var(--text)"></textarea>
+      </div>
+      <div id="panel-matterport" class="upanel">
+        <div class="dropzone" id="matterport-dz"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Drop Matterport screenshots here or click to browse</p><span>JPG, PNG &mdash; multiple angles OK</span><input type="file" id="matterport-input" accept="image/*" multiple style="display:none"/></div>
+        <div class="thumbs" id="matterport-thumbs"></div>
+      </div>
     </div>
-    <div class="fld"><label>Claim / job number</label><input type="text" id="claim-num" placeholder="e.g. RIR-2024-0847"/></div>
-    <div class="fld"><label>Insured name</label><input type="text" id="insured-name" placeholder="e.g. John Smith"/></div>
-    <div class="fld"><label>Property address</label><input type="text" id="prop-addr" placeholder="e.g. 123 Main St, Providence RI"/></div>
   </div>
   <div class="card">
-    <div class="fld">
-      <label>Voice dictate or type field notes ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ AI auto-generates scope from this</label>
-      <div class="vrow">
-        <textarea id="voice-notes" rows="6" placeholder="Walk the job and dictate... e.g. Master bath ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ceiling collapsed, drywall saturated all four walls to 24 inches, vinyl plank buckled, vanity cabinet damaged at base, subfloor soft in two spots..."></textarea>
-        <button class="mic" id="mic-btn" onclick="toggleMic()" title="Tap to start voice dictation">
-          <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-        </button>
+    <div class="card-header"><div class="step-badge">2</div><div class="card-title">Job Details &amp; Scope</div></div>
+    <div class="card-body">
+      <div class="form-grid">
+        <div class="form-field"><label>Loss type</label><select id="loss-type"><option value="">Select loss type</option><option value="water">Water damage</option><option value="fire">Fire &amp; smoke</option><option value="mold">Mold remediation</option><option value="reconstruction">Full reconstruction</option><option value="new_construction">New construction</option></select></div>
+        <div class="form-field"><label>Claim / Job number</label><input type="text" id="claim-num" placeholder="e.g. CLM-2024-001"/></div>
+        <div class="form-field"><label>Insured name</label><input type="text" id="insured-name" placeholder="e.g. John Smith"/></div>
+        <div class="form-field"><label>Property address</label><input type="text" id="prop-addr" placeholder="e.g. 21 Collins Ave, Providence RI"/></div>
+        <div class="form-field span2">
+          <label>Field notes &amp; scope description</label>
+          <textarea id="voice-notes" rows="4" placeholder="Walk the job and dictate... e.g. Master bath ceiling collapsed, drywall saturated all four walls to 24 inches, vinyl plank buckled, vanity cabinet damaged at base, subfloor soft in two spots..."></textarea>
+          <div class="mic-row"><button id="mic-btn" type="button"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>Start voice dictation</button><span id="mic-status"></span></div>
+        </div>
       </div>
-      <div style="font-size:11px;color:var(--text3);margin-top:4px;" id="mic-status">Tap mic to start voice dictation (Chrome only)</div>
     </div>
+    <div class="analyze-wrap"><button id="analyze-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Analyze all inputs and generate estimate</button></div>
   </div>
-</div>
-
-<button class="abtn" id="analyze-btn" onclick="runAnalysis()">Analyze all inputs and generate estimate</button>
-
-<!-- Results -->
-<div class="results" id="results">
-  <div class="lcard" id="lcard">
-    <div class="spinner"></div>
-    <div class="lmsg" id="lmsg">Analyzing media and extracting measurements...</div>
-    <div class="lsub" id="lsub"></div>
-  </div>
-  <div id="rcontent" style="display:none;">
-    <div class="chips" id="chips"></div>
-    <div class="tabs">
-      <button class="tab active" onclick="swTab('li',this)">Line items</button>
-      <button class="tab" onclick="swTab('meas',this)">Measurements</button>
-      <button class="tab" onclick="swTab('dmg',this)">Damage log</button>
-      <button class="tab" onclick="swTab('scope',this)">Scope of work</button>
-      <button class="tab" onclick="swTab('prop',this)">Proposal</button>
-    </div>
-
-    <div id="tab-li">
-      <div class="twrap"><table>
-        <thead><tr><th>Code</th><th>Description</th><th>Qty</th><th>Unit</th><th style="text-align:right">Unit cost</th><th style="text-align:right">Total</th></tr></thead>
-        <tbody id="li-body"></tbody>
-      </table></div>
-      <div class="erow">
-        <button class="eb p" onclick="exportESI()">Export .ESI (Xactimate)</button>
-        <button class="eb" onclick="exportCSV()">Export CSV</button>
-        <button class="eb" onclick="copyLI()">Copy to clipboard</button>
-        <button class="eb" onclick="window.print()">Print / PDF</button>
+  <div id="results">
+    <div id="lcard"><div class="spinner"></div><div id="lmsg">Analyzing your job site...</div><div id="lsub">This usually takes 20&ndash;45 seconds</div></div>
+    <div id="emsg"></div>
+    <div id="rcontent" class="card">
+      <div class="result-tabs">
+        <button class="rtab active" id="tab-li" onclick="swTab('li',this)">Line Items</button>
+        <button class="rtab" id="tab-meas" onclick="swTab('meas',this)">Measurements</button>
+        <button class="rtab" id="tab-dmg" onclick="swTab('dmg',this)">Damage</button>
+        <button class="rtab" id="tab-scope" onclick="swTab('scope',this)">Scope of Work</button>
+        <button class="rtab" id="tab-prop" onclick="swTab('prop',this)">Proposal</button>
       </div>
-    </div>
-
-    <div id="tab-meas" style="display:none;">
-      <div class="rgrid" id="room-grid"></div>
-      <div class="twrap" id="meas-twrap" style="display:none;margin-top:12px;"><table>
-        <thead><tr><th>Item</th><th>Location</th><th>Value</th><th>Unit</th><th>Source</th><th>Notes</th></tr></thead>
-        <tbody id="meas-body"></tbody>
-      </table></div>
-      <div class="erow">
-        <button class="eb p" onclick="copyMeas()">Copy measurements</button>
-        <button class="eb" onclick="exportMeasCSV()">Export CSV</button>
-        <button class="eb" onclick="window.print()">Print / PDF</button>
-      </div>
-    </div>
-
-    <div id="tab-dmg" style="display:none;">
-      <div class="twrap"><div id="dmg-list"></div></div>
-      <div class="erow"><button class="eb p" onclick="copyDmg()">Copy damage log</button></div>
-    </div>
-
-    <div id="tab-scope" style="display:none;">
-      <div style="font-size:13px;color:var(--text2);margin-bottom:8px;">AI-generated scope ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ edit before finalizing</div>
-      <textarea class="sed" id="scope-ed"></textarea>
-      <div class="erow">
-        <button class="eb p" onclick="copyScope()">Copy scope</button>
-        <button class="eb" onclick="pushProp()">Push to proposal</button>
-        <button class="eb" onclick="window.print()">Print / PDF</button>
-      </div>
-    </div>
-
-    <div id="tab-prop" style="display:none;">
-      <div class="pb" id="prop-text"></div>
-      <div class="erow">
-        <button class="eb p" onclick="copyProp()">Copy proposal</button>
-        <button class="eb" onclick="window.print()">Print / PDF</button>
+      <div class="rpanel active" id="rp-li"><div class="chips" id="chips"></div><div id="li-body"></div></div>
+      <div class="rpanel" id="rp-meas"><div class="meas-tabs" id="meas-twrap"></div><div id="room-grid"></div><div id="meas-body" class="meas-body-txt"></div></div>
+      <div class="rpanel" id="rp-dmg"><div id="dmg-list"></div></div>
+      <div class="rpanel" id="rp-scope"><textarea id="scope-ed"></textarea></div>
+      <div class="rpanel" id="rp-prop"><textarea id="prop-text"></textarea></div>
+      <div class="action-bar">
+        <button class="btn-sm primary" onclick="exportESI()">Export Xactimate ESX</button>
+        <button class="btn-sm" onclick="exportCSV()">Export CSV</button>
+        <button class="btn-sm" onclick="exportMeasCSV()">Export Measurements</button>
+        <button class="btn-sm" onclick="copyLI()">Copy Line Items</button>
+        <button class="btn-sm" onclick="copyScope()">Copy Scope</button>
+        <button class="btn-sm" onclick="copyProp()">Copy Proposal</button>
+        <button class="btn-sm" onclick="pushProp()">Push Proposal</button>
       </div>
     </div>
   </div>
-  <div class="emsg" id="emsg" style="display:none;"></div>
-</div>
-
-<footer>ScopeIQ ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· Rhode Island Restoration ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· Powered by Claude AI</footer>
-</div>
-
+</main>
+<footer><p style="font-weight:600;color:var(--text2);margin-bottom:4px">ScopeIQ</p><p>Rhode Island Restoration</p><p style="margin-top:4px">Powered by Claude AI</p></footer>
 <script>
+
 const API_URL = '/api/analyze';
 const MAX_IMGS = 6; // Keep well under API payload limit
 const MAX_IMG_SIZE = 800; // Max dimension in pixels before sending
@@ -831,6 +597,7 @@ function copyScope(){navigator.clipboard.writeText(document.getElementById('scop
 function pushProp(){document.getElementById('prop-text').textContent=document.getElementById('scope-ed').value+'\n\n'+currentProp;alert('Scope pushed to Proposal tab.');}
 function copyMeas(){const lines=currentRooms.map(r=>`${r.name}: ${r.length}ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ${r.width}ft, ${r.sf}SF, ceiling ${r.height}ft, ${r.lf_wall}LF walls [${r.measurement_source}]`).join('\n');navigator.clipboard.writeText(lines).then(()=>alert('Measurements copied!'));}
 function copyDmg(){navigator.clipboard.writeText(currentDmg.map(d=>`[${(d.severity||'').toUpperCase()}] ${d.location} ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ${d.description} | Action: ${d.action||''}`).join('\n')).then(()=>alert('Damage log copied!'));}
+
 </script>
 </body>
 </html>
